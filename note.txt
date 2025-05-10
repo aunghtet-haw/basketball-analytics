@@ -1,0 +1,43 @@
+Transfer learning is used from yolo v8. we will fine tune with data set from ultralytics
+the dataset used https://universe.roboflow.com/workspace-5ujvu/basketball-players-fy4c2-vfsuv
+
+7.5.2025
+the result from the yolo model is box
+a box composed of keypoint = pose, mask = segmentation, names = thing/class that model detect, image in numpy array
+confidence, data = bounding box (it has many format, xyxy format is easy to understand).
+
+Tracking should be implemented since one player moves from one position from current frame to next frame.
+now we treat players differently in each frame.
+
+utils/video_utils created
+tracker/player_tracker implemented
+the return value detection from detect_frame is
+
+detection.boxes      # Detected bounding boxes (ultralytics.utils.ops.Boxes)
+detection.masks      # Segmentation masks (if model supports it)
+detection.probs      # Classification probabilities (optional)
+detection.orig_img   # Original input image (numpy array)
+detection.orig_shape # Shape of the original image
+detection.names      # Dictionary of class names: {0: 'person', 1: 'bicycle', ...}
+
+sv.Detections uses a NumPy-based structure, and iteration over it yields individual detections in this format:
+(xyxy, confidence, class_id, tracker_id)
+
+
+track is a list of dictionaries of dictionaries.
+
+tracks (list)
+│
+├── Frame 0 (dict)
+│   ├── Track ID 1 → {"bbox": [x1, y1, x2, y2]}
+│   └── Track ID 2 → {"bbox": [x1, y1, x2, y2]}
+│
+├── Frame 1 (dict)
+│   └── Track ID 1 → {"bbox": [x1, y1, x2, y2]}
+│
+└── Frame 2 (dict)
+    └── Track ID 2 → {"bbox": [x1, y1, x2, y2]}
+
+9.5.2025
+tracker/ball_tracker implemented
+
