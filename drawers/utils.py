@@ -18,7 +18,6 @@ def draw_triangle(frame, bbox, color): # bbox = [x1, y1, x2, y2]
 
     return frame
 
-    return frame
 
 def draw_ellipse(frame, bbox, color, track_id = None): # bbox = [x1, y1, x2, y2]
     y2 = int(bbox[3])
